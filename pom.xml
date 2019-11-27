@@ -8,7 +8,18 @@
     <version>1.0.0-SNAPSHOT</version>
     <name>parent-modules</name>
     <packaging>pom</packaging>
-
+    
+    <distributionManagement>
+               <snapshotRepository>
+                    <id>nexus-snapshots</id>
+                    <url>http://18.224.108.33:8081/repository/maven-snapshots/</url>
+               </snapshotRepository>
+               <repository>
+                    <id>nexus-releases</id>
+                    <url>http://18.224.108.33:8081/repository/maven-releases/</url>
+               </repository>
+	    
+    </distributionManagement>
     <dependencies>
         <!-- logging -->
         <dependency>
@@ -89,6 +100,16 @@
             <scope>test</scope>
             <optional>true</optional>
         </dependency>
+	<dependency>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-deploy-plugin</artifactId>
+           <version>3.0.0-M1</version>
+        </dependency>
+	<dependency>
+           <groupId>org.sonarsource.scanner.maven</groupId>
+           <artifactId>sonar-maven-plugin</artifactId>
+           <version>3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -100,6 +121,19 @@
                 <configuration>
                     <executable>maven</executable>
                 </configuration>
+            </plugin>
+	    <plugin>
+                 <artifactId>maven-deploy-plugin</artifactId>
+                 <version>2.8.1</version>
+                 <executions>
+                   <execution>
+                     <id>default-deploy</id>
+                     <phase>deploy</phase>
+                     <goals>
+                      <goal>deploy</goal>
+                     </goals>
+                   </execution>
+                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
